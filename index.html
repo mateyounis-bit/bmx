@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,17 +5,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BMX Store</title>
-  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <style>
-    /* style.css */
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: Arial;
       scroll-behavior: smooth;
+    }
+
+    /* ✅ FIX 1: منع الـ scroll الأفقي */
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
     }
 
     body {
@@ -104,7 +106,7 @@
       width: 400px;
       height: 100vh;
       background: white;
-      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+      box-shadow: -2px 0 10px rgba(0,0,0,0.2);
       z-index: 2000;
       transition: right 0.4s ease;
       display: flex;
@@ -154,19 +156,9 @@
       background: #f9f9f9;
     }
 
-    .cart-item-info {
-      flex: 1;
-    }
-
-    .cart-item-name {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .cart-item-price {
-      color: #ff6600;
-      font-size: 14px;
-    }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-weight: bold; margin-bottom: 5px; }
+    .cart-item-price { color: #ff6600; font-size: 14px; }
 
     .cart-item-controls {
       display: flex;
@@ -234,24 +226,18 @@
       transition: 0.3s;
     }
 
-    .checkout-btn:hover {
-      background: #e55a00;
-    }
+    .checkout-btn:hover { background: #e55a00; }
 
     .cart-overlay {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
       z-index: 1999;
     }
 
-    .cart-overlay.active {
-      display: block;
-    }
+    .cart-overlay.active { display: block; }
 
     .hero {
       height: 90vh;
@@ -262,29 +248,21 @@
     }
 
     .overlay {
-      background: rgba(0, 0, 0, .5);
+      background: rgba(0,0,0,.5);
       padding: 50px;
       text-align: center;
       color: white;
       border-radius: 15px;
     }
 
-    .overlay h1 {
-      font-size: 55px;
-      margin-bottom: 15px;
-    }
+    .overlay h1 { font-size: 55px; margin-bottom: 15px; }
 
     .products {
       padding: 80px 10%;
       text-align: center;
     }
 
-    .products h2 {
-      font-size: 40px;
-      margin-bottom: 40px;
-    }
-
-
+    .products h2 { font-size: 40px; margin-bottom: 40px; }
 
     .cards {
       display: grid;
@@ -296,13 +274,11 @@
       background: white;
       border-radius: 15px;
       overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
+      box-shadow: 0 5px 15px rgba(0,0,0,.15);
       transition: .4s;
     }
 
-    .card:hover {
-      transform: translateY(-10px);
-    }
+    .card:hover { transform: translateY(-10px); }
 
     .card img {
       width: 100%;
@@ -310,9 +286,7 @@
       object-fit: cover;
     }
 
-    .card h3 {
-      margin-top: 15px;
-    }
+    .card h3 { margin-top: 15px; }
 
     .card p {
       font-size: 25px;
@@ -327,8 +301,7 @@
       padding-bottom: 20px;
     }
 
-    .cart,
-    .buy {
+    .cart-btn, .buy {
       padding: 10px 18px;
       border: none;
       cursor: pointer;
@@ -336,25 +309,15 @@
       font-weight: bold;
     }
 
-    .cart {
-      background: #111;
-      color: white;
-    }
-
-    .buy {
-      background: #ff6600;
-      color: white;
-    }
+    .cart-btn { background: #111; color: white; }
+    .buy      { background: #ff6600; color: white; }
 
     .contact {
       padding: 80px 10%;
       text-align: center;
     }
 
-    .contact h2 {
-      margin-bottom: 30px;
-      font-size: 40px;
-    }
+    .contact h2 { margin-bottom: 30px; font-size: 40px; }
 
     form {
       display: flex;
@@ -364,8 +327,7 @@
       gap: 15px;
     }
 
-    input,
-    textarea {
+    input, textarea {
       padding: 15px;
       border: 1px solid #ccc;
       border-radius: 8px;
@@ -388,9 +350,7 @@
       margin-top: 50px;
     }
 
-    .social {
-      margin-top: 15px;
-    }
+    .social { margin-top: 15px; }
 
     .social a {
       color: white;
@@ -398,31 +358,54 @@
       margin: 10px;
     }
 
-    @media(max-width:768px) {
+    /* ─── MOBILE ─── */
+    @media (max-width: 768px) {
 
       header {
         padding: 15px 5%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
       }
 
-      .logo {
-        font-size: 22px;
-      }
+      .logo { font-size: 22px; }
 
+      /* ✅ FIX 2: المنيو يطلع من فوق بدل اليسار — يمنع الـ scroll الأفقي */
       nav {
-        position: absolute;
-        top: 70px;
-        right: -100%;
+        position: fixed;
+        top: 65px;
+        left: 0;
         width: 100%;
         background: #111;
         flex-direction: column;
-        padding: 30px;
-        transition: .5s;
-        gap: 15px;
+        align-items: flex-start;
+        padding: 0;
+        gap: 0;
+        z-index: 999;
+        max-height: 0;
+        overflow: hidden;
+        border: none;
+        outline: none;
+        box-shadow: none;
+        transition: max-height 0.4s ease, padding 0.3s ease;
       }
 
       nav.active {
-        right: 0;
+        max-height: 300px;
+        padding: 10px 0;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       }
+
+      nav a {
+        color: white;
+        padding: 14px 20px;
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        border-bottom: 1px solid #333;
+      }
+
+      nav a:last-child { border-bottom: none; }
 
       .header-actions {
         gap: 8px;
@@ -432,23 +415,34 @@
       .menu {
         display: block;
         order: 3;
+        font-size: 24px;
+        cursor: pointer;
       }
 
       #langBtn {
-        order: 2;
-        padding: 8px 10px;
-        font-size: 14px;
+        padding: 6px 8px;
+        font-size: 12px;
       }
 
-      .cart-icon {
-        order: 1;
-      }
+      .cart-icon { order: 1; }
 
+      /* ✅ FIX 3: Cart sidebar تملأ الشاشة بالموبايل بدون overflow */
       .cart-sidebar {
         width: 100%;
         right: -100%;
       }
 
+      .cart-sidebar.active { right: 0; }
+
+      .overlay { padding: 25px; }
+      .overlay h1 { font-size: 30px; }
+    }
+
+    @keyframes fadeInOut {
+      0%   { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+      10%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+      90%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
     }
   </style>
 </head>
@@ -456,24 +450,28 @@
 <body>
 
   <header>
-    <div class="logo"> 🚴 BMX Store </div>
-    <nav id="nav"> 
-      <a href="#home" data-en="Home" data-ar="الرئيسية">Home</a> 
-      <a href="#products" data-en="Products" data-ar="المنتجات">Products</a> 
-      <a href="#contact" data-en="Contact" data-ar="اتصل بنا">Contact</a> 
+    <div class="logo">🚴 BMX Store</div>
+
+    <nav id="nav">
+      <a href="#home"     data-en="Home"     data-ar="الرئيسية">Home</a>
+      <a href="#products" data-en="Products" data-ar="المنتجات">Products</a>
+      <a href="#contact"  data-en="Contact"  data-ar="اتصل بنا">Contact</a>
     </nav>
+
     <div class="header-actions">
-      <div class="cart-icon" onclick="openCart()"> 
-        <i class="fas fa-shopping-cart"></i> 
-        <span id="cartCount">0</span> 
+      <div class="cart-icon" onclick="openCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cartCount">0</span>
       </div>
       <button id="langBtn" onclick="toggleLanguage()">🌐 EN</button>
     </div>
-    <div id="menu" class="menu" onclick="toggleMenu()"> 
-      <i class="fas fa-bars"></i> 
+
+    <div id="menuBtn" class="menu" onclick="toggleMenu()">
+      <i class="fas fa-bars"></i>
     </div>
   </header>
 
+  <!-- ─── HERO ─── -->
   <section class="hero" id="home">
     <div class="overlay">
       <h1 id="welcome">Welcome To Our Store</h1>
@@ -481,83 +479,67 @@
     </div>
   </section>
 
+  <!-- ─── PRODUCTS ─── -->
   <section id="products" class="products">
-
     <h2 id="productsTitle">Our Products</h2>
-
     <div class="cards">
 
       <div class="card">
-        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=500" alt="">
+        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=500" alt="Freestyle BMX">
         <h3 class="bikeName">Freestyle BMX</h3>
         <p>$450</p>
-
         <div class="buttons">
-          <button class="cart">Add To Cart</button>
+          <button class="cart-btn">Add To Cart</button>
           <button class="buy">Buy</button>
         </div>
-
       </div>
 
       <div class="card">
-        <img src="https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?w=500" alt="">
+        <img src="https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?w=500" alt="Pro BMX">
         <h3 class="bikeName">Pro BMX</h3>
         <p>$520</p>
-
         <div class="buttons">
-          <button class="cart">Add To Cart</button>
+          <button class="cart-btn">Add To Cart</button>
           <button class="buy">Buy</button>
         </div>
-
       </div>
 
       <div class="card">
-        <img src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=500" alt="">
+        <img src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=500" alt="Street BMX">
         <h3 class="bikeName">Street BMX</h3>
         <p>$600</p>
-
         <div class="buttons">
-          <button class="cart">Add To Cart</button>
+          <button class="cart-btn">Add To Cart</button>
           <button class="buy">Buy</button>
         </div>
-
       </div>
 
     </div>
-
   </section>
 
+  <!-- ─── CONTACT ─── -->
   <section id="contact" class="contact">
     <h2 id="contactTitle">Contact Us</h2>
-
-    <form>
-      <input type="text" placeholder="Your Name">
-      <input type="email" placeholder="Your Email">
-      <textarea placeholder="Your Message"></textarea>
-
-      <button>Send</button>
-
+    <form onsubmit="return false;">
+      <input  type="text"  id="namePlaceholder"    placeholder="Your Name">
+      <input  type="email" id="emailPlaceholder"   placeholder="Your Email">
+      <textarea            id="messagePlaceholder" placeholder="Your Message"></textarea>
+      <button id="sendBtn">Send</button>
     </form>
-
   </section>
 
+  <!-- ─── FOOTER ─── -->
   <footer>
-
     <p>Designed By <strong>The MA Group</strong></p>
-
     <div class="social">
-
       <a href="#"><i class="fab fa-facebook"></i></a>
       <a href="#"><i class="fab fa-instagram"></i></a>
-
     </div>
-
   </footer>
 
-  <!-- Cart Overlay -->
+  <!-- Cart Overlay & Sidebar -->
   <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
 
-  <!-- Cart Sidebar -->
   <div class="cart-sidebar" id="cartSidebar">
     <div class="cart-header">
       <h2 id="cartTitle">🛒 Cart</h2>
@@ -576,209 +558,204 @@
   </div>
 
   <script>
-    // Global state
+    // ─── State ───────────────────────────────────────────────
     let isEnglish = true;
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // Toggle menu on mobile
+    // ─── Menu toggle ─────────────────────────────────────────
     function toggleMenu() {
-      document.getElementById("nav").classList.toggle("active");
+      document.getElementById('nav').classList.toggle('active');
     }
 
-    // Toggle language
+    // close menu when a link is clicked
+    document.querySelectorAll('#nav a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.getElementById('nav').classList.remove('active');
+      });
+    });
+
+    // ─── Language ────────────────────────────────────────────
+    const translations = {
+      en: {
+        welcome       : 'Welcome To Our Store',
+        heroText      : 'Find the Best BMX Bikes and Accessories',
+        productsTitle : 'Our Products',
+        contactTitle  : 'Contact Us',
+        langBtn       : '🌐 EN',
+        cartTitle     : '🛒 Cart',
+        totalLabel    : 'Total:',
+        checkoutBtn   : 'Checkout',
+        cartEmpty     : 'Your cart is empty',
+        addToCart     : 'Add To Cart',
+        buy           : 'Buy',
+        remove        : 'Remove',
+        sendBtn       : 'Send',
+        namePH        : 'Your Name',
+        emailPH       : 'Your Email',
+        messagePH     : 'Your Message',
+        addedMsg      : 'Added to cart!',
+        emptyMsg      : 'Your cart is empty!',
+        dir           : 'ltr',
+        navLinks      : ['Home', 'Products', 'Contact'],
+      },
+      ar: {
+        welcome       : 'مرحباً بكم في متجرنا',
+        heroText      : 'أفضل دراجات وإكسسوارات BMX',
+        productsTitle : 'المنتجات',
+        contactTitle  : 'اتصل بنا',
+        langBtn       : '🌐 AR',
+        cartTitle     : '🛒 السلة',
+        totalLabel    : 'الإجمالي:',
+        checkoutBtn   : 'الدفع',
+        cartEmpty     : 'سلتك فارغة',
+        addToCart     : 'أضف للسلة',
+        buy           : 'شراء',
+        remove        : 'حذف',
+        sendBtn       : 'إرسال',
+        namePH        : 'اسمك',
+        emailPH       : 'بريدك الإلكتروني',
+        messagePH     : 'رسالتك',
+        addedMsg      : 'تمت الإضافة للسلة!',
+        emptyMsg      : 'سلتك فارغة!',
+        dir           : 'rtl',
+        navLinks      : ['الرئيسية', 'المنتجات', 'اتصل بنا'],
+      }
+    };
+
     function toggleLanguage() {
       isEnglish = !isEnglish;
-      updateLanguage();
       localStorage.setItem('language', isEnglish ? 'en' : 'ar');
+      applyLanguage();
     }
 
-    function updateLanguage() {
-      if (isEnglish) {
-        document.getElementById("welcome").innerHTML = "Welcome To Our Store";
-        document.getElementById("heroText").innerHTML = "Find the Best BMX Bikes and Accessories";
-        document.getElementById("productsTitle").innerHTML = "Our Products";
-        document.getElementById("contactTitle").innerHTML = "Contact Us";
-        document.getElementById("langBtn").innerHTML = "🌐 EN";
-        document.getElementById("cartTitle").innerHTML = "🛒 Cart";
-        document.getElementById("totalLabel").innerHTML = "Total:";
-        document.getElementById("checkoutBtn").innerHTML = "Checkout";
-        
-        document.querySelectorAll("nav a").forEach(item => {
-          item.innerHTML = item.dataset.en;
-        });
+    function applyLanguage() {
+      const t = isEnglish ? translations.en : translations.ar;
 
-        document.querySelectorAll(".cart").forEach(btn => {
-          btn.innerHTML = "Add To Cart";
-        });
+      // text content
+      document.getElementById('welcome').textContent        = t.welcome;
+      document.getElementById('heroText').textContent       = t.heroText;
+      document.getElementById('productsTitle').textContent  = t.productsTitle;
+      document.getElementById('contactTitle').textContent   = t.contactTitle;
+      document.getElementById('langBtn').textContent        = t.langBtn;
+      document.getElementById('cartTitle').textContent      = t.cartTitle;
+      document.getElementById('totalLabel').textContent     = t.totalLabel;
+      document.getElementById('checkoutBtn').textContent    = t.checkoutBtn;
+      document.getElementById('sendBtn').textContent        = t.sendBtn;
 
-        document.querySelectorAll(".buy").forEach(btn => {
-          btn.innerHTML = "Buy";
-        });
+      // placeholders
+      document.getElementById('namePlaceholder').placeholder    = t.namePH;
+      document.getElementById('emailPlaceholder').placeholder   = t.emailPH;
+      document.getElementById('messagePlaceholder').placeholder = t.messagePH;
 
-        document.body.dir = "ltr";
-      } else {
-        document.getElementById("welcome").innerHTML = "مرحباً بكم في متجرنا";
-        document.getElementById("heroText").innerHTML = "أفضل دراجات وإكسسوارات BMX";
-        document.getElementById("productsTitle").innerHTML = "المنتجات";
-        document.getElementById("contactTitle").innerHTML = "اتصل بنا";
-        document.getElementById("langBtn").innerHTML = "🌐 AR";
-        document.getElementById("cartTitle").innerHTML = "🛒 السلة";
-        document.getElementById("totalLabel").innerHTML = "الإجمالي:";
-        document.getElementById("checkoutBtn").innerHTML = "الدفع";
-        
-        document.querySelectorAll("nav a").forEach(item => {
-          item.innerHTML = item.dataset.ar;
-        });
+      // ✅ FIX 4: تبديل نص الروابط في المنيو
+      const navLinks = document.querySelectorAll('#nav a');
+      navLinks.forEach((a, i) => {
+        a.textContent = t.navLinks[i];
+      });
 
-        document.querySelectorAll(".cart").forEach(btn => {
-          btn.innerHTML = "أضف للسلة";
-        });
+      // ✅ تبديل نص أزرار المنتجات
+      document.querySelectorAll('.cart-btn').forEach(btn => {
+        btn.textContent = t.addToCart;
+      });
+      document.querySelectorAll('.buy').forEach(btn => {
+        btn.textContent = t.buy;
+      });
 
-        document.querySelectorAll(".buy").forEach(btn => {
-          btn.innerHTML = "شراء";
-        });
+      // direction
+      document.body.dir = t.dir;
 
-        document.body.dir = "rtl";
-      }
+      // refresh cart display (نص "حذف" / "Remove")
+      updateCartDisplay();
     }
 
-    // Add to cart functionality
+    // ─── Cart logic ──────────────────────────────────────────
     function addToCart(productName, productPrice) {
-      const existingItem = cart.find(item => item.name === productName);
-      if (existingItem) {
-        existingItem.quantity++;
+      const existing = cart.find(i => i.name === productName);
+      if (existing) {
+        existing.quantity++;
       } else {
-        cart.push({
-          id: Date.now(),
-          name: productName,
-          price: productPrice,
-          quantity: 1
-        });
+        cart.push({ id: Date.now(), name: productName, price: productPrice, quantity: 1 });
       }
-
       updateCartCount();
       updateCartDisplay();
       localStorage.setItem('cart', JSON.stringify(cart));
-      
-      // Show brief notification
-      const msg = isEnglish ? 'Added to cart!' : 'تمت الإضافة للسلة!';
-      showNotification(msg);
-    }
-
-    function showNotification(message) {
-      const notification = document.createElement('div');
-      notification.textContent = message;
-      notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #ff6600;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 5px;
-        z-index: 3000;
-        animation: fadeInOut 2s ease-in-out;
-      `;
-      
-      document.body.appendChild(notification);
-      setTimeout(() => notification.remove(), 2000);
+      showNotification(isEnglish ? translations.en.addedMsg : translations.ar.addedMsg);
     }
 
     function updateCartCount() {
-      const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
-      document.getElementById("cartCount").textContent = cartCount;
+      const total = cart.reduce((s, i) => s + i.quantity, 0);
+      document.getElementById('cartCount').textContent = total;
     }
 
     function updateCartDisplay() {
-      const container = document.getElementById("cartItemsContainer");
-      const emptyMsg = document.getElementById("emptyMessage");
+      const t = isEnglish ? translations.en : translations.ar;
+      const container = document.getElementById('cartItemsContainer');
 
       if (cart.length === 0) {
-        container.innerHTML = `<div class="cart-empty">${isEnglish ? 'Your cart is empty' : 'سلتك فارغة'}</div>`;
-        document.getElementById("totalPrice").textContent = "$0.00";
+        container.innerHTML = `<div class="cart-empty">${t.cartEmpty}</div>`;
+        document.getElementById('totalPrice').textContent = '$0.00';
         return;
       }
 
       let html = '';
       let total = 0;
-
       cart.forEach(item => {
-        const itemTotal = item.price * item.quantity;
-        total += itemTotal;
-
+        total += item.price * item.quantity;
         html += `
           <div class="cart-item">
             <div class="cart-item-info">
               <div class="cart-item-name">${item.name}</div>
-              <div class="cart-item-price">$${item.price.toFixed(2)} x ${item.quantity}</div>
+              <div class="cart-item-price">$${item.price.toFixed(2)} × ${item.quantity}</div>
             </div>
             <div class="cart-item-controls">
-              <button class="qty-btn" onclick="decreaseQty(${item.id})">−</button>
+              <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
               <div class="qty-display">${item.quantity}</div>
-              <button class="qty-btn" onclick="increaseQty(${item.id})">+</button>
-              <button class="remove-item" onclick="removeFromCart(${item.id})">${isEnglish ? 'Remove' : 'حذف'}</button>
+              <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+              <button class="remove-item" onclick="removeFromCart(${item.id})">${t.remove}</button>
             </div>
-          </div>
-        `;
+          </div>`;
       });
 
       container.innerHTML = html;
-      document.getElementById("totalPrice").textContent = `$${total.toFixed(2)}`;
+      document.getElementById('totalPrice').textContent = `$${total.toFixed(2)}`;
     }
 
-    function increaseQty(itemId) {
-      const item = cart.find(i => i.id === itemId);
-      if (item) {
-        item.quantity++;
-        updateCartDisplay();
-        updateCartCount();
-        localStorage.setItem('cart', JSON.stringify(cart));
-      }
-    }
-
-    function decreaseQty(itemId) {
-      const item = cart.find(i => i.id === itemId);
-      if (item && item.quantity > 1) {
-        item.quantity--;
-        updateCartDisplay();
-        updateCartCount();
-        localStorage.setItem('cart', JSON.stringify(cart));
-      }
-    }
-
-    function removeFromCart(itemId) {
-      cart = cart.filter(item => item.id !== itemId);
+    function changeQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      item.quantity += delta;
+      if (item.quantity < 1) { removeFromCart(id); return; }
       updateCartDisplay();
       updateCartCount();
       localStorage.setItem('cart', JSON.stringify(cart));
     }
 
-    function openCart() {
-      document.getElementById("cartSidebar").classList.add("active");
-      document.getElementById("cartOverlay").classList.add("active");
+    function removeFromCart(id) {
+      cart = cart.filter(i => i.id !== id);
+      updateCartDisplay();
+      updateCartCount();
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function openCart()  {
+      document.getElementById('cartSidebar').classList.add('active');
+      document.getElementById('cartOverlay').classList.add('active');
     }
 
     function closeCart() {
-      document.getElementById("cartSidebar").classList.remove("active");
-      document.getElementById("cartOverlay").classList.remove("active");
+      document.getElementById('cartSidebar').classList.remove('active');
+      document.getElementById('cartOverlay').classList.remove('active');
     }
 
     function checkout() {
       if (cart.length === 0) {
-        const msg = isEnglish ? 'Your cart is empty!' : 'سلتك فارغة!';
-        showNotification(msg);
+        showNotification(isEnglish ? translations.en.emptyMsg : translations.ar.emptyMsg);
         return;
       }
-
-      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      const msg = isEnglish 
-        ? `Thank you for your order! Total: $${total.toFixed(2)}` 
-        : `شكراً لطلبك! الإجمالي: $${total.toFixed(2)}`;
-      
-      showNotification(msg);
-      
-      // Clear cart after checkout
+      const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+      showNotification(isEnglish
+        ? `Thank you! Total: $${total.toFixed(2)}`
+        : `شكراً! الإجمالي: $${total.toFixed(2)}`);
       setTimeout(() => {
         cart = [];
         updateCartCount();
@@ -788,53 +765,43 @@
       }, 2000);
     }
 
-    // Attach click handlers to cart and buy buttons
-    function initializeCartButtons() {
-      document.querySelectorAll(".card").forEach((card) => {
-        const cartBtn = card.querySelector(".cart");
-        const buyBtn = card.querySelector(".buy");
-        const priceText = card.querySelector("p").textContent;
-        const productName = card.querySelector(".bikeName").textContent;
-        const productPrice = parseFloat(priceText.replace('$', ''));
+    function showNotification(msg) {
+      const n = document.createElement('div');
+      n.textContent = msg;
+      n.style.cssText = `
+        position:fixed; top:100px; left:50%;
+        transform:translateX(-50%);
+        background:#ff6600; color:white;
+        padding:12px 20px; border-radius:5px;
+        z-index:3000; animation:fadeInOut 2s ease-in-out;
+        white-space:nowrap;
+      `;
+      document.body.appendChild(n);
+      setTimeout(() => n.remove(), 2000);
+    }
 
-        cartBtn.addEventListener("click", function() {
-          addToCart(productName, productPrice);
-        });
+    // ─── Attach product buttons ───────────────────────────────
+    function initButtons() {
+      document.querySelectorAll('.card').forEach(card => {
+        const name  = card.querySelector('.bikeName').textContent;
+        const price = parseFloat(card.querySelector('p').textContent.replace('$', ''));
 
-        buyBtn.addEventListener("click", function() {
-          addToCart(productName, productPrice);
-          setTimeout(() => {
-            openCart();
-          }, 300);
+        card.querySelector('.cart-btn').addEventListener('click', () => addToCart(name, price));
+        card.querySelector('.buy').addEventListener('click', () => {
+          addToCart(name, price);
+          setTimeout(openCart, 300);
         });
       });
     }
 
-    // Initialize on page load
-    document.addEventListener("DOMContentLoaded", function() {
+    // ─── Init ─────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('language');
+      if (saved === 'ar') { isEnglish = false; applyLanguage(); }
       updateCartCount();
       updateCartDisplay();
-      const savedLanguage = localStorage.getItem('language');
-      if (savedLanguage === 'ar') {
-        isEnglish = false;
-        updateLanguage();
-      }
-      initializeCartButtons();
+      initButtons();
     });
-
-    // Add animation keyframes
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes fadeInOut {
-        0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-        10% { opacity: 1; transform: translateX(-50%) translateY(0); }
-        90% { opacity: 1; transform: translateX(-50%) translateY(0); }
-        100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-      }
-    `;
-    document.head.appendChild(style);
   </script>
-
 </body>
-
 </html>
