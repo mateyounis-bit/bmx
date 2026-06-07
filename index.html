@@ -1,0 +1,840 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMX Store</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    /* style.css */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #f4f4f4;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 10%;
+      background: #111;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    #langBtn {
+      padding: 8px 12px;
+      background: #ff6600;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .cart-icon span {
+      background: #ff6600;
+      color: white;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .menu {
+      display: none;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    /* Cart Sidebar */
+    .cart-sidebar {
+      position: fixed;
+      right: -400px;
+      top: 0;
+      width: 400px;
+      height: 100vh;
+      background: white;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+      z-index: 2000;
+      transition: right 0.4s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-sidebar.active {
+      right: 0;
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: #111;
+      color: white;
+    }
+
+    .cart-header h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .close-cart {
+      font-size: 28px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      background: #f9f9f9;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .cart-item-price {
+      color: #ff6600;
+      font-size: 14px;
+    }
+
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qty-btn {
+      width: 24px;
+      height: 24px;
+      border: 1px solid #ddd;
+      background: white;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 12px;
+    }
+
+    .qty-display {
+      width: 30px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .remove-item {
+      background: #ff6600;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+    }
+
+    .cart-footer {
+      padding: 20px;
+      border-top: 2px solid #ddd;
+      background: #f9f9f9;
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #111;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      padding: 15px;
+      background: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .checkout-btn:hover {
+      background: #e55a00;
+    }
+
+    .cart-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1999;
+    }
+
+    .cart-overlay.active {
+      display: block;
+    }
+
+    .hero {
+      height: 90vh;
+      background: url("https://images.unsplash.com/photo-1511994298241-608e28f14fde?w=1400") center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, .5);
+      padding: 50px;
+      text-align: center;
+      color: white;
+      border-radius: 15px;
+    }
+
+    .overlay h1 {
+      font-size: 55px;
+      margin-bottom: 15px;
+    }
+
+    .products {
+      padding: 80px 10%;
+      text-align: center;
+    }
+
+    .products h2 {
+      font-size: 40px;
+      margin-bottom: 40px;
+    }
+
+
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
+      transition: .4s;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin-top: 15px;
+    }
+
+    .card p {
+      font-size: 25px;
+      color: #ff6600;
+      margin: 15px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding-bottom: 20px;
+    }
+
+    .cart,
+    .buy {
+      padding: 10px 18px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .cart {
+      background: #111;
+      color: white;
+    }
+
+    .buy {
+      background: #ff6600;
+      color: white;
+    }
+
+    .contact {
+      padding: 80px 10%;
+      text-align: center;
+    }
+
+    .contact h2 {
+      margin-bottom: 30px;
+      font-size: 40px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      max-width: 600px;
+      margin: auto;
+      gap: 15px;
+    }
+
+    input,
+    textarea {
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    form button {
+      padding: 15px;
+      background: #ff6600;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    footer {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 30px;
+      margin-top: 50px;
+    }
+
+    .social {
+      margin-top: 15px;
+    }
+
+    .social a {
+      color: white;
+      font-size: 28px;
+      margin: 10px;
+    }
+
+    @media(max-width:768px) {
+
+      header {
+        padding: 15px 5%;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      nav {
+        position: absolute;
+        top: 70px;
+        right: -100%;
+        width: 100%;
+        background: #111;
+        flex-direction: column;
+        padding: 30px;
+        transition: .5s;
+        gap: 15px;
+      }
+
+      nav.active {
+        right: 0;
+      }
+
+      .header-actions {
+        gap: 8px;
+        order: 2;
+      }
+
+      .menu {
+        display: block;
+        order: 3;
+      }
+
+      #langBtn {
+        order: 2;
+        padding: 8px 10px;
+        font-size: 14px;
+      }
+
+      .cart-icon {
+        order: 1;
+      }
+
+      .cart-sidebar {
+        width: 100%;
+        right: -100%;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo"> 🚴 BMX Store </div>
+    <nav id="nav"> 
+      <a href="#home" data-en="Home" data-ar="الرئيسية">Home</a> 
+      <a href="#products" data-en="Products" data-ar="المنتجات">Products</a> 
+      <a href="#contact" data-en="Contact" data-ar="اتصل بنا">Contact</a> 
+    </nav>
+    <div class="header-actions">
+      <div class="cart-icon" onclick="openCart()"> 
+        <i class="fas fa-shopping-cart"></i> 
+        <span id="cartCount">0</span> 
+      </div>
+      <button id="langBtn" onclick="toggleLanguage()">🌐 EN</button>
+    </div>
+    <div id="menu" class="menu" onclick="toggleMenu()"> 
+      <i class="fas fa-bars"></i> 
+    </div>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="overlay">
+      <h1 id="welcome">Welcome To Our Store</h1>
+      <p id="heroText">Find the Best BMX Bikes and Accessories</p>
+    </div>
+  </section>
+
+  <section id="products" class="products">
+
+    <h2 id="productsTitle">Our Products</h2>
+
+    <div class="cards">
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=500" alt="">
+        <h3 class="bikeName">Freestyle BMX</h3>
+        <p>$450</p>
+
+        <div class="buttons">
+          <button class="cart">Add To Cart</button>
+          <button class="buy">Buy</button>
+        </div>
+
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?w=500" alt="">
+        <h3 class="bikeName">Pro BMX</h3>
+        <p>$520</p>
+
+        <div class="buttons">
+          <button class="cart">Add To Cart</button>
+          <button class="buy">Buy</button>
+        </div>
+
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=500" alt="">
+        <h3 class="bikeName">Street BMX</h3>
+        <p>$600</p>
+
+        <div class="buttons">
+          <button class="cart">Add To Cart</button>
+          <button class="buy">Buy</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section id="contact" class="contact">
+    <h2 id="contactTitle">Contact Us</h2>
+
+    <form>
+      <input type="text" placeholder="Your Name">
+      <input type="email" placeholder="Your Email">
+      <textarea placeholder="Your Message"></textarea>
+
+      <button>Send</button>
+
+    </form>
+
+  </section>
+
+  <footer>
+
+    <p>Designed By <strong>The MA Group</strong></p>
+
+    <div class="social">
+
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+
+    </div>
+
+  </footer>
+
+  <!-- Cart Overlay -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+  <!-- Cart Sidebar -->
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h2 id="cartTitle">🛒 Cart</h2>
+      <button class="close-cart" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItemsContainer">
+      <div class="cart-empty" id="emptyMessage">Your cart is empty</div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span id="totalLabel">Total:</span>
+        <span id="totalPrice">$0.00</span>
+      </div>
+      <button class="checkout-btn" id="checkoutBtn" onclick="checkout()">Checkout</button>
+    </div>
+  </div>
+
+  <script>
+    // Global state
+    let isEnglish = true;
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Toggle menu on mobile
+    function toggleMenu() {
+      document.getElementById("nav").classList.toggle("active");
+    }
+
+    // Toggle language
+    function toggleLanguage() {
+      isEnglish = !isEnglish;
+      updateLanguage();
+      localStorage.setItem('language', isEnglish ? 'en' : 'ar');
+    }
+
+    function updateLanguage() {
+      if (isEnglish) {
+        document.getElementById("welcome").innerHTML = "Welcome To Our Store";
+        document.getElementById("heroText").innerHTML = "Find the Best BMX Bikes and Accessories";
+        document.getElementById("productsTitle").innerHTML = "Our Products";
+        document.getElementById("contactTitle").innerHTML = "Contact Us";
+        document.getElementById("langBtn").innerHTML = "🌐 EN";
+        document.getElementById("cartTitle").innerHTML = "🛒 Cart";
+        document.getElementById("totalLabel").innerHTML = "Total:";
+        document.getElementById("checkoutBtn").innerHTML = "Checkout";
+        
+        document.querySelectorAll("nav a").forEach(item => {
+          item.innerHTML = item.dataset.en;
+        });
+
+        document.querySelectorAll(".cart").forEach(btn => {
+          btn.innerHTML = "Add To Cart";
+        });
+
+        document.querySelectorAll(".buy").forEach(btn => {
+          btn.innerHTML = "Buy";
+        });
+
+        document.body.dir = "ltr";
+      } else {
+        document.getElementById("welcome").innerHTML = "مرحباً بكم في متجرنا";
+        document.getElementById("heroText").innerHTML = "أفضل دراجات وإكسسوارات BMX";
+        document.getElementById("productsTitle").innerHTML = "المنتجات";
+        document.getElementById("contactTitle").innerHTML = "اتصل بنا";
+        document.getElementById("langBtn").innerHTML = "🌐 AR";
+        document.getElementById("cartTitle").innerHTML = "🛒 السلة";
+        document.getElementById("totalLabel").innerHTML = "الإجمالي:";
+        document.getElementById("checkoutBtn").innerHTML = "الدفع";
+        
+        document.querySelectorAll("nav a").forEach(item => {
+          item.innerHTML = item.dataset.ar;
+        });
+
+        document.querySelectorAll(".cart").forEach(btn => {
+          btn.innerHTML = "أضف للسلة";
+        });
+
+        document.querySelectorAll(".buy").forEach(btn => {
+          btn.innerHTML = "شراء";
+        });
+
+        document.body.dir = "rtl";
+      }
+    }
+
+    // Add to cart functionality
+    function addToCart(productName, productPrice) {
+      const existingItem = cart.find(item => item.name === productName);
+      if (existingItem) {
+        existingItem.quantity++;
+      } else {
+        cart.push({
+          id: Date.now(),
+          name: productName,
+          price: productPrice,
+          quantity: 1
+        });
+      }
+
+      updateCartCount();
+      updateCartDisplay();
+      localStorage.setItem('cart', JSON.stringify(cart));
+      
+      // Show brief notification
+      const msg = isEnglish ? 'Added to cart!' : 'تمت الإضافة للسلة!';
+      showNotification(msg);
+    }
+
+    function showNotification(message) {
+      const notification = document.createElement('div');
+      notification.textContent = message;
+      notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #ff6600;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 5px;
+        z-index: 3000;
+        animation: fadeInOut 2s ease-in-out;
+      `;
+      
+      document.body.appendChild(notification);
+      setTimeout(() => notification.remove(), 2000);
+    }
+
+    function updateCartCount() {
+      const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+      document.getElementById("cartCount").textContent = cartCount;
+    }
+
+    function updateCartDisplay() {
+      const container = document.getElementById("cartItemsContainer");
+      const emptyMsg = document.getElementById("emptyMessage");
+
+      if (cart.length === 0) {
+        container.innerHTML = `<div class="cart-empty">${isEnglish ? 'Your cart is empty' : 'سلتك فارغة'}</div>`;
+        document.getElementById("totalPrice").textContent = "$0.00";
+        return;
+      }
+
+      let html = '';
+      let total = 0;
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        html += `
+          <div class="cart-item">
+            <div class="cart-item-info">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-price">$${item.price.toFixed(2)} x ${item.quantity}</div>
+            </div>
+            <div class="cart-item-controls">
+              <button class="qty-btn" onclick="decreaseQty(${item.id})">−</button>
+              <div class="qty-display">${item.quantity}</div>
+              <button class="qty-btn" onclick="increaseQty(${item.id})">+</button>
+              <button class="remove-item" onclick="removeFromCart(${item.id})">${isEnglish ? 'Remove' : 'حذف'}</button>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      document.getElementById("totalPrice").textContent = `$${total.toFixed(2)}`;
+    }
+
+    function increaseQty(itemId) {
+      const item = cart.find(i => i.id === itemId);
+      if (item) {
+        item.quantity++;
+        updateCartDisplay();
+        updateCartCount();
+        localStorage.setItem('cart', JSON.stringify(cart));
+      }
+    }
+
+    function decreaseQty(itemId) {
+      const item = cart.find(i => i.id === itemId);
+      if (item && item.quantity > 1) {
+        item.quantity--;
+        updateCartDisplay();
+        updateCartCount();
+        localStorage.setItem('cart', JSON.stringify(cart));
+      }
+    }
+
+    function removeFromCart(itemId) {
+      cart = cart.filter(item => item.id !== itemId);
+      updateCartDisplay();
+      updateCartCount();
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function openCart() {
+      document.getElementById("cartSidebar").classList.add("active");
+      document.getElementById("cartOverlay").classList.add("active");
+    }
+
+    function closeCart() {
+      document.getElementById("cartSidebar").classList.remove("active");
+      document.getElementById("cartOverlay").classList.remove("active");
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        const msg = isEnglish ? 'Your cart is empty!' : 'سلتك فارغة!';
+        showNotification(msg);
+        return;
+      }
+
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const msg = isEnglish 
+        ? `Thank you for your order! Total: $${total.toFixed(2)}` 
+        : `شكراً لطلبك! الإجمالي: $${total.toFixed(2)}`;
+      
+      showNotification(msg);
+      
+      // Clear cart after checkout
+      setTimeout(() => {
+        cart = [];
+        updateCartCount();
+        updateCartDisplay();
+        localStorage.setItem('cart', JSON.stringify(cart));
+        closeCart();
+      }, 2000);
+    }
+
+    // Attach click handlers to cart and buy buttons
+    function initializeCartButtons() {
+      document.querySelectorAll(".card").forEach((card) => {
+        const cartBtn = card.querySelector(".cart");
+        const buyBtn = card.querySelector(".buy");
+        const priceText = card.querySelector("p").textContent;
+        const productName = card.querySelector(".bikeName").textContent;
+        const productPrice = parseFloat(priceText.replace('$', ''));
+
+        cartBtn.addEventListener("click", function() {
+          addToCart(productName, productPrice);
+        });
+
+        buyBtn.addEventListener("click", function() {
+          addToCart(productName, productPrice);
+          setTimeout(() => {
+            openCart();
+          }, 300);
+        });
+      });
+    }
+
+    // Initialize on page load
+    document.addEventListener("DOMContentLoaded", function() {
+      updateCartCount();
+      updateCartDisplay();
+      const savedLanguage = localStorage.getItem('language');
+      if (savedLanguage === 'ar') {
+        isEnglish = false;
+        updateLanguage();
+      }
+      initializeCartButtons();
+    });
+
+    // Add animation keyframes
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeInOut {
+        0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+        10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+
+</body>
+
+</html>
